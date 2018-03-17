@@ -3,5 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorUnderline">#0C8CF2</color>
+    <color name="colorUnderline">#0c8cf2</color>
+    <color name="colorCian">#01939a</color>
+    <color name="colorCianDark">#017277</color>
+    <color name="colorBarYellow">#FFC400</color>
 </resources>

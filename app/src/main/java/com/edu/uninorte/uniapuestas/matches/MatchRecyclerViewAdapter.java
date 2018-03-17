@@ -41,20 +41,21 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
     public void setData(List<MatchEntity> data){this.matchesData=data;}
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textoId;
-        TextView textoNombre;
-        TextView textoApellido;
-        TextView textoCity;
-        TextView textoBooks;
-
+        TextView textoNombrePartido;
+        TextView textoFecha;
+        TextView textoFase;
+        TextView textoVotosTeamA;
+        TextView textoEmpates;
+        TextView textoVotosTeamB;
 
         public ViewHolder(View itemView){
             super(itemView);
-            textoId = itemView.findViewById(R.id.textoId);
-            textoNombre= itemView.findViewById(R.id.textoNombre);
-            textoApellido = itemView.findViewById(R.id.textoApellido);
-            textoCity = itemView.findViewById(R.id.textoCity);
-            textoBooks = itemView.findViewById(R.id.textoBooks);
+            textoNombrePartido = itemView.findViewById(R.id.textoNombrePartido);
+            textoFecha= itemView.findViewById(R.id.textoFecha);
+            textoFase = itemView.findViewById(R.id.textoFase);
+            textoVotosTeamA = itemView.findViewById(R.id.textoVotosTeamA);
+            textoEmpates = itemView.findViewById(R.id.textoEmpates);
+            textoVotosTeamB = itemView.findViewById(R.id.textoVotosTeamB);
         }
     }
 
