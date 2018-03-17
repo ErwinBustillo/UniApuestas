@@ -16,7 +16,8 @@ public class MatchEntity {
     private String teamA;
     @ColumnInfo(name = "teamB")
     private String teamB;
-
+    @ColumnInfo(name = "date")
+    private String date;
     @ColumnInfo(name = "users_team_a")
     private String usersTeamA;
     @ColumnInfo(name = "users_team_b")
@@ -28,14 +29,16 @@ public class MatchEntity {
     @ColumnInfo(name = "match_points")
     private String matchPoints;
 
-    public MatchEntity(int id, String teamA, String teamB, String scoreA, String scoreB, String usersTeamA, String usersTeamB, String usersDraw, boolean isOpen) {
+    public MatchEntity(int id, String teamA, String teamB, String date, String usersTeamA, String usersTeamB, String usersDraw, boolean isOpen, String matchPoints) {
         this.id = id;
         this.teamA = teamA;
         this.teamB = teamB;
+        this.date = date;
         this.usersTeamA = usersTeamA;
         this.usersTeamB = usersTeamB;
         this.usersDraw = usersDraw;
         this.isOpen = isOpen;
+        this.matchPoints = matchPoints;
     }
 
     public int getId() {
@@ -60,6 +63,14 @@ public class MatchEntity {
 
     public void setTeamB(String teamB) {
         this.teamB = teamB;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getUsersTeamA() {
@@ -92,5 +103,13 @@ public class MatchEntity {
 
     public void setOpen(boolean open) {
         isOpen = open;
+    }
+
+    public String getMatchPoints() {
+        return matchPoints;
+    }
+
+    public void setMatchPoints(String matchPoints) {
+        this.matchPoints = matchPoints;
     }
 }

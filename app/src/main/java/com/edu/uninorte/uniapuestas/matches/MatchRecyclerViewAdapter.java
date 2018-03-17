@@ -30,7 +30,12 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
 
     @Override
     public void onBindViewHolder(MatchRecyclerViewAdapter.ViewHolder holder, int position) {
-
+        holder.textoNombrePartido.setText(matchesData.get(position).getTeamA()+" VS "+ matchesData.get(position).getTeamB()+"");
+        holder.textoFecha.setText(matchesData.get(position).getDate()+"");
+        holder.textoFase.setText("Fase de grupos");
+        holder.textoVotosTeamA.setText("Gana equipo A: "+matchesData.get(position).getUsersTeamA()+" Usuarios");
+        holder.textoEmpates.setText("Empate: "+matchesData.get(position).getUsersDraw()+"Usuarios");
+        holder.textoVotosTeamB.setText("Gana equipo B: "+matchesData.get(position).getUsersTeamB()+"Usuarios");
     }
 
     @Override
