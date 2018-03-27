@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import com.edu.uninorte.uniapuestas.matches.MatchEntity;
 import com.edu.uninorte.uniapuestas.matches.MatchRecyclerViewAdapter;
 import com.edu.uninorte.uniapuestas.matches.MatchViewModel;
+import com.edu.uninorte.uniapuestas.retrofit.JsonDataViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class AllBetFragment extends Fragment {
     private MatchRecyclerViewAdapter adapter;
     private List<MatchEntity> data;
 
-    private MatchViewModel model;
+    private JsonDataViewModel model;
 
     @Nullable
     @Override
@@ -40,13 +42,17 @@ public class AllBetFragment extends Fragment {
         adapter = new MatchRecyclerViewAdapter(new ArrayList<MatchEntity>());
         rv.setAdapter(adapter);
 
-        model = ViewModelProviders.of((FragmentActivity) view.getContext()).get(MatchViewModel.class);
+        model = ViewModelProviders.of((FragmentActivity) view.getContext()).get(JsonDataViewModel.class);
 
-        MatchEntity match = new MatchEntity(1,"Colombia","Japon","junio 13","Colombia gana :3 users","Japon Gana : 1 users","Empate: 5 users",true,"1000");
+        model.getLiveData().observe((FragmentActivity) view.getContext(), liveData -> {
+            Log.d("TAGASO", "Get live data");
+        });
 
-        data.add(match);
-        model.addMatch(match);
-        adapter.notifyDataSetChanged();
+        //MatchEntity match = new MatchEntity(1,"Colombia","Japon","junio 13","Colombia gana :3 users","Japon Gana : 1 users","Empate: 5 users",true,"1000");
+
+        //data.add(match);
+        //model.addMatch(match);
+        //adapter.notifyDataSetChanged();
         //adapter.setData(data);
 
         //AQUI falla porque faltan cosas esperando retrofit

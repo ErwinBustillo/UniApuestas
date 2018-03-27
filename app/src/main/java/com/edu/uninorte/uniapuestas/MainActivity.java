@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
     // TODO LO QUE ESTA AQUI SE TIENE QUE IR PARA LOS FRAGMENTOS DE ALLBETS FRAGMENTS Y MY BETS FRAGMENTS PARA MANIPULAR LA DATA de una mejor manera
 
     private static final String JSON_ARRAY_REQUEST_URL = "https://androidtutorialpoint.com/api/volleyJsonArray";
+    //https://github.com/lsv/fifa-worldcup-2018/blob/master/data.json
+    //https://androidtutorialpoint.com/api/volleyJsonArray
     private static final String TAG = "MainActivity";
-
     ProgressDialog progressDialog;
     private View showDialogView;
     private TextView outputTextView;
@@ -58,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
-        JsonArrayRequest jsonArrayReq = new JsonArrayRequest(url,
-        new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayReq = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d(TAG, response.toString());
@@ -68,25 +68,22 @@ public class MainActivity extends AppCompatActivity {
                 outputTextView = showDialogView.findViewById(R.id.text_view_dialog);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
                 alertDialogBuilder.setView(showDialogView);
-                alertDialogBuilder
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                   public void onClick(DialogInterface dialog, int id) {
+                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
                     }
-                   })
-                    .setCancelable(false)
-                    .create();
-                    outputTextView.setText(response.toString());
-                    alertDialogBuilder.show();
-                    progressDialog.hide();
+                }).setCancelable(false).create();
+                outputTextView.setText(response.toString());
+                alertDialogBuilder.show();
+                progressDialog.hide();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-                    progressDialog.hide();
-                }
-            });
-
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                progressDialog.hide();
+            }
+        });
         // Adding JsonObject request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayReq, REQUEST_TAG);
     }
