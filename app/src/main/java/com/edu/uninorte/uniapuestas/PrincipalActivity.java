@@ -70,11 +70,14 @@ public class PrincipalActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if(id == R.id.nav_verApuestas){
+            getSupportActionBar().setTitle("UniApuestas");
             setFragment(0);
         }else if (id == R.id.nav_misApuestas) {
+            getSupportActionBar().setTitle("Mis Apuestas");
             setFragment(1);
             // Handle the camera action
         } else if (id == R.id.nav_perfil) {
+            getSupportActionBar().setTitle("Mi Perfil");
            setFragment(2);
         } else if (id == R.id.nav_salir) {
             Intent i = new Intent(getApplicationContext(),LoginActivity.class);
