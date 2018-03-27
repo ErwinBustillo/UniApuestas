@@ -28,7 +28,7 @@ import java.util.List;
 public class AllBetFragment extends Fragment {
     RecyclerView rv;
     private MatchRecyclerViewAdapter adapter;
-    private List<MatchEntity> data;
+    private List<MatchEntity> data; // este es el que tiene la data del partido
 
     private JsonDataViewModel model;
 

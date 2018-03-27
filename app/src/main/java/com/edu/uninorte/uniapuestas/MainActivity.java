@@ -22,15 +22,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.edu.uninorte.uniapuestas.Services.VolleySingleton;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
     // NOTA DE ERWIN
     // TODO LO QUE ESTA AQUI SE TIENE QUE IR PARA LOS FRAGMENTOS DE ALLBETS FRAGMENTS Y MY BETS FRAGMENTS PARA MANIPULAR LA DATA de una mejor manera
 
-    private static final String JSON_ARRAY_REQUEST_URL = "https://androidtutorialpoint.com/api/volleyJsonArray";
+    private static final String JSON_ARRAY_REQUEST_URL = "https://api-mundial-movil.herokuapp.com/api/v1/matches";//"https://androidtutorialpoint.com/api/volleyJsonArray";
     //https://github.com/lsv/fifa-worldcup-2018/blob/master/data.json
     //https://androidtutorialpoint.com/api/volleyJsonArray
     private static final String TAG = "MainActivity";
@@ -73,7 +76,26 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }).setCancelable(false).create();
-                outputTextView.setText(response.toString());
+
+                /// filtro de datos del json
+                try {
+                    JSONObject match = response.getJSONObject(0);
+
+                    int id = match.getInt("id");
+                    String group = match.getString("group");
+                    String fecha = match.getString("date");
+                    boolean finished = match.getBoolean("finished");
+                    String homeTeam = match.getJSONObject("home_team").getString("name");
+                    String awayTeam = match.getJSONObject("away_team").getString("name");
+                    outputTextView.setText("id: "+id +"\n" +"grupo: " + group +"\n" +"home team: "+homeTeam +"\n" + "Away team :" + awayTeam + "\n" +"Fecha : " +fecha);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                ///
+
+                // outputTextView.setText(response.toString());
                 alertDialogBuilder.show();
                 progressDialog.hide();
             }
