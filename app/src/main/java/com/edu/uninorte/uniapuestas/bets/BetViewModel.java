@@ -8,18 +8,25 @@ import android.support.annotation.NonNull;
 
 import com.edu.uninorte.uniapuestas.AppDatabase;
 
+import java.util.List;
+
 /**
  * Created by Visitante on 5/03/2018.
  */
 
 public class BetViewModel extends AndroidViewModel{
     private AppDatabase appDatabase;
-    private LiveData<BetEntity> data;
+    private LiveData<List<BetEntity>> data;
 
     public BetViewModel(@NonNull Application application) {
         super(application);
 
         appDatabase = AppDatabase.getInstance(this.getApplication());
+        data = appDatabase.betDao().allBets();
+    }
+
+    public LiveData<List<BetEntity>> getAllBets() {
+        return appDatabase.betDao().allBets();
     }
 
     public void addBet(BetEntity bet) {

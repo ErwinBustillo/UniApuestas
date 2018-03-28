@@ -5,7 +5,10 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.edu.uninorte.uniapuestas.bets.BetDao;
+import com.edu.uninorte.uniapuestas.bets.BetEntity;
+import com.edu.uninorte.uniapuestas.matches.Match;
 import com.edu.uninorte.uniapuestas.matches.MatchDao;
+import com.edu.uninorte.uniapuestas.matches.MatchEntity;
 import com.edu.uninorte.uniapuestas.users.UserDao;
 import com.edu.uninorte.uniapuestas.users.UserEntity;
 
@@ -15,7 +18,7 @@ import static android.arch.persistence.room.Room.databaseBuilder;
  * Created by mauri on 27/03/2018.
  */
 
-@Database(entities = {UserEntity.class}, version = 1)
+@Database(entities = {UserEntity.class, BetEntity.class, MatchEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract BetDao betDao();

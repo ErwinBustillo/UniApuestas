@@ -3,6 +3,7 @@ package com.edu.uninorte.uniapuestas.bets;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Visitante on 5/03/2018.
@@ -10,8 +11,8 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class BetEntity {
-    @PrimaryKey
-    private String id;
+    @PrimaryKey @NonNull
+    private String bid;
     @ColumnInfo(name = "user_id")
     private String userId;
     @ColumnInfo(name = "match_id")
@@ -21,20 +22,20 @@ public class BetEntity {
     @ColumnInfo(name = "scoreB")
     private String scoreB;
 
-    public BetEntity(String id, String userId, String matchId, String scoreA, String scoreB) {
-        this.id = id;
+    public BetEntity(String bid, String userId, String matchId, String scoreA, String scoreB) {
+        this.bid = bid;
         this.userId = userId;
         this.matchId = matchId;
         this.scoreA = scoreA;
         this.scoreB = scoreB;
     }
 
-    public String getId() {
-        return id;
+    public String getBid() {
+        return bid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBid(String id) {
+        this.bid = id;
     }
 
     public String getUserId() {
@@ -67,5 +68,16 @@ public class BetEntity {
 
     public void setScoreB(String scoreB) {
         this.scoreB = scoreB;
+    }
+
+    @Override
+    public String toString() {
+        return "BetEntity{" +
+                "bid='" + bid + '\'' +
+                ", userId='" + userId + '\'' +
+                ", matchId='" + matchId + '\'' +
+                ", scoreA='" + scoreA + '\'' +
+                ", scoreB='" + scoreB + '\'' +
+                '}';
     }
 }
