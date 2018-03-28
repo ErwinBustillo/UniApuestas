@@ -59,7 +59,6 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Your Name"
         android:textAlignment="center"
         android:textColor="@color/colorUnderline"
         app:layout_constraintBottom_toTopOf="@+id/button4"
