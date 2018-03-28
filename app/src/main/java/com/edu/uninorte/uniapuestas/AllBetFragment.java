@@ -27,7 +27,6 @@ import com.edu.uninorte.uniapuestas.matches.Match;
 import com.edu.uninorte.uniapuestas.matches.MatchEntity;
 import com.edu.uninorte.uniapuestas.matches.MatchRecyclerViewAdapter;
 import com.edu.uninorte.uniapuestas.matches.MatchViewModel;
-import com.edu.uninorte.uniapuestas.retrofit.JsonDataViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
