@@ -101,6 +101,7 @@ public class AllBetFragment extends Fragment {
 
                     adapter.setData(matches);
                     adapter.notifyDataSetChanged();
+                    DataSingleton.matches = matches;
 
                 } catch (JSONException e) {
                     e.printStackTrace();

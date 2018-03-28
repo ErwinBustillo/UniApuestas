@@ -43,7 +43,7 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Hacer apuestas " + DataSingleton.currentUser.getName());
+                builder.setTitle("Hacer apuestas");
                 View dialog = LayoutInflater.from(view.getContext()).inflate(R.layout.bet_form, null, false);
                 TextView textoHome = dialog.findViewById(R.id.textoHome);
                 TextView textoAway = dialog.findViewById(R.id.textoAway);
