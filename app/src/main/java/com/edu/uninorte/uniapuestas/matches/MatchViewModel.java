@@ -8,6 +8,8 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.edu.uninorte.uniapuestas.AppDatabase;
+
 import java.util.List;
 
 /**
@@ -16,32 +18,31 @@ import java.util.List;
 
 public class MatchViewModel extends AndroidViewModel {
 
-
-    private LiveData<List<MatchEntity>> matches;
-
+    private AppDatabase appDatabase;
+    private LiveData<MatchEntity> data;
 
     public MatchViewModel(@NonNull Application application) {
         super(application);
-        //appDatabase=AppDatabase.getInstance(this.getApplication());
+        appDatabase= AppDatabase.getInstance(this.getApplication());
+        //data = appDatabase.matchDao()
 
-        //data= appDatabase.userDao().getAll();
     }
 
-    public LiveData<List<MatchEntity>> getMatches(){return matches;} // metodo que devueve todos los partidos
+    /*public LiveData<List<MatchEntity>> getAllMatches() {
+        //return appDatabase.matchDao().allMatches();
+    }*/
 
-
-    // para testing
 
     public void addMatch(MatchEntity match){
 
-        new AddItemTask().execute(match); // la ejecuta
+        new AddItemTask().execute(match);
     }
     // tarea asyncrona que escribe en el dao e inserta el usuario
     private class AddItemTask extends AsyncTask<MatchEntity, Void, Void> {
 
         @Override
         protected Void doInBackground(MatchEntity... item) {
-            //appDatabase.userDao().insert(item[0]);
+            //appDatabase.matchDao().insert(item[0]);
             return null;
         }
     }
