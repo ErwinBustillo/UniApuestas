@@ -34,6 +34,8 @@ public class PrincipalActivity extends AppCompatActivity
         UserEntity u = (UserEntity) i.getSerializableExtra("user");
         Log.d("Tagaso Principal", u.toString());
 
+        getSupportActionBar().setSubtitle(u.getName().toString() + " " + "\n"+ "Points :" + u.getPoints());
+
         // NAVEGACION LATERAL
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

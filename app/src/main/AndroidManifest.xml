@@ -35,7 +35,7 @@
             android:theme="@style/AppCustomTheme" />
         <activity
             android:name=".PrincipalActivity"
-            android:label="@string/title_activity_principal"
+            android:label="UniApuestas"
             android:theme="@style/AppTheme.YESActionBar"></activity>
     </application>
 

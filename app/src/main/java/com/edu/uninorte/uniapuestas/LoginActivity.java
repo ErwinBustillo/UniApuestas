@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // adds Admin
         model = ViewModelProviders.of(this).get(UserViewModel.class);
-        model.addUser(new UserEntity(1, "Admin", "admin@admin.com", "password", true, "0"));
+        model.addUser(new UserEntity(1, "Admin", "admin@admin.com", "1234", true, "0"));
         //
 
         model.getAllUsers().observe(this, users -> {
