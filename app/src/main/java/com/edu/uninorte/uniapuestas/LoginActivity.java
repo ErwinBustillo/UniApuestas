@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                 // hacer la validacion de los datos del servidor
                 Intent i = new Intent(view.getContext(),PrincipalActivity.class);
                 i.putExtra("user", (Serializable) u);
+                DataSingleton.currentUser = u;
                 startActivity(i);
             } else {
                 Toast.makeText(this,"CREDENCIALES INVALIDAS",Toast.LENGTH_SHORT).show();

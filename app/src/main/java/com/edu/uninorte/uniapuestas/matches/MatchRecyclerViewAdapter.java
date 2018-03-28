@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.edu.uninorte.uniapuestas.DataSingleton;
 import com.edu.uninorte.uniapuestas.R;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Cambiar termino");
+                builder.setTitle("Hacer apuestas " + DataSingleton.currentUser.getName());
                 View dialog = LayoutInflater.from(view.getContext()).inflate(R.layout.bet_form, null, false);
                 TextView textoHome = dialog.findViewById(R.id.textoHome);
                 TextView textoAway = dialog.findViewById(R.id.textoAway);
