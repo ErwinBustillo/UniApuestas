@@ -16,9 +16,9 @@ import java.util.List;
 
 public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecyclerViewAdapter.ViewHolder>{
 
-    private List<MatchEntity> matchesData;
+    private List<Match> matchesData;
 
-    public MatchRecyclerViewAdapter(List<MatchEntity> data){
+    public MatchRecyclerViewAdapter(List<Match> data){
         this.matchesData=data;
     }
     @Override
@@ -30,12 +30,12 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
 
     @Override
     public void onBindViewHolder(MatchRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.textoNombrePartido.setText(matchesData.get(position).getTeamA()+" VS "+ matchesData.get(position).getTeamB()+"");
+        holder.textoNombrePartido.setText(matchesData.get(position).getHomeTeam()+" VS "+ matchesData.get(position).getAwayTeam()+"");
         holder.textoFecha.setText(matchesData.get(position).getDate()+"");
         holder.textoFase.setText("Fase de grupos");
-        holder.textoVotosTeamA.setText("Gana equipo A: "+matchesData.get(position).getUsersTeamA()+" Usuarios");
-        holder.textoEmpates.setText("Empate: "+matchesData.get(position).getUsersDraw()+"Usuarios");
-        holder.textoVotosTeamB.setText("Gana equipo B: "+matchesData.get(position).getUsersTeamB()+"Usuarios");
+        //holder.textoVotosTeamA.setText("Gana equipo A: "+matchesData.get(position).getUsersTeamA()+" Usuarios");
+        //holder.textoEmpates.setText("Empate: "+matchesData.get(position).getUsersDraw()+"Usuarios");
+        //holder.textoVotosTeamB.setText("Gana equipo B: "+matchesData.get(position).getUsersTeamB()+"Usuarios");
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
         return matchesData.size();
     }
 
-    public void setData(List<MatchEntity> data){this.matchesData=data;}
+    public void setData(List<Match> data){this.matchesData=data;}
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView textoNombrePartido;
