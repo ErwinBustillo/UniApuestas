@@ -18,6 +18,10 @@
 
             android:title="Mi Perfil" />
         <item
+            android:id="@+id/nav_LoadJSON"
+
+            android:title="Load JSON" />
+        <item
             android:id="@+id/nav_salir"
 
             android:title="Salir" />

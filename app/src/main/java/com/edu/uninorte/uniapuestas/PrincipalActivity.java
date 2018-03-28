@@ -88,6 +88,15 @@ public class PrincipalActivity extends AppCompatActivity
         } else if (id == R.id.nav_perfil) {
             getSupportActionBar().setTitle("Mi Perfil");
            setFragment(2);
+        }else if (id == R.id.nav_LoadJSON) {
+            if (DataSingleton.currentUser.isAdmin()){
+                getSupportActionBar().setTitle("Cargar Partidos");
+                setFragment(3);
+            }
+            else{
+                Toast.makeText(this,"OPERACION NO PERMITIDA",Toast.LENGTH_SHORT).show();
+            }
+
         } else if (id == R.id.nav_salir) {
             Intent i = new Intent(getApplicationContext(),LoginActivity.class);
             startActivity(i);
@@ -124,6 +133,13 @@ public class PrincipalActivity extends AppCompatActivity
                 fragmentTransaction = fragmentManager.beginTransaction();
                 ProfileFragment profileFragment = new ProfileFragment();
                 fragmentTransaction.replace(R.id.fragment, profileFragment);
+                fragmentTransaction.commit();
+                break;
+            case 3:
+                fragmentManager = getFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                LoadJSONFragment loadJSONFragment = new LoadJSONFragment();
+                fragmentTransaction.replace(R.id.fragment, loadJSONFragment);
                 fragmentTransaction.commit();
                 break;
         }
