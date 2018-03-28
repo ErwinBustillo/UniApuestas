@@ -7,4 +7,5 @@
     <color name="colorCian">#01939a</color>
     <color name="colorCianDark">#017277</color>
     <color name="colorBarYellow">#FFC400</color>
+    <color name="colorBarYellowDark">#f9d854</color>
 </resources>
