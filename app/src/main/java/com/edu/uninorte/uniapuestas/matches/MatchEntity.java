@@ -112,4 +112,19 @@ public class MatchEntity {
     public void setMatchPoints(String matchPoints) {
         this.matchPoints = matchPoints;
     }
+
+    @Override
+    public String toString() {
+        return "MatchEntity{" +
+                "id=" + id +
+                ", teamA='" + teamA + '\'' +
+                ", teamB='" + teamB + '\'' +
+                ", date='" + date + '\'' +
+                ", usersTeamA='" + usersTeamA + '\'' +
+                ", usersTeamB='" + usersTeamB + '\'' +
+                ", usersDraw='" + usersDraw + '\'' +
+                ", isOpen=" + isOpen +
+                ", matchPoints='" + matchPoints + '\'' +
+                '}';
+    }
 }

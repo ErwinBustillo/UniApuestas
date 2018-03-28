@@ -28,7 +28,8 @@ import java.util.List;
 public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecyclerViewAdapter.ViewHolder>{
 
     private List<MatchEntity> matchesData;
-    private BetViewModel model;
+    private BetViewModel betModel;
+    private MatchViewModel matchModel;
 
     public MatchRecyclerViewAdapter(List<MatchEntity> data){
         this.matchesData=data;
@@ -64,14 +65,26 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
                 builder.setPositiveButton("Apostar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        model = ViewModelProviders.of((FragmentActivity) dialog.getContext()).get(BetViewModel.class);
-                        model.addBet(new BetEntity((position + 1) + "", DataSingleton.currentUser.getUid() + "", DataSingleton.matches.get(position).getId() + "",editTextHome.getText().toString(),editTextAway.getText().toString()));
+                        betModel = ViewModelProviders.of((FragmentActivity) dialog.getContext()).get(BetViewModel.class);
+                        betModel.addBet(new BetEntity((position + 1) + "", DataSingleton.currentUser.getUid() + "", DataSingleton.matches.get(position).getId() + "",editTextHome.getText().toString(),editTextAway.getText().toString()));
 
-                        model.getAllBets().observe((LifecycleOwner) dialog.getContext(), betEntities -> {
+                        betModel.getAllBets().observe((LifecycleOwner) dialog.getContext(), betEntities -> {
                             for (BetEntity test: betEntities) {
                                 Log.d("TAGASo", test.toString());
                             }
                         });
+
+                        matchModel = ViewModelProviders.of((FragmentActivity) dialog.getContext()).get(MatchViewModel.class);
+                        MatchEntity editMatch = DataSingleton.matches.get(position);
+                        if(Integer.valueOf(editTextHome.getText().toString()) > Integer.valueOf(editTextAway.getText().toString())) {
+                            editMatch.setUsersTeamA(String.valueOf(Integer.valueOf(editMatch.getUsersTeamA()) + 1));
+                        } else if (Integer.valueOf(editTextHome.getText().toString()) < Integer.valueOf(editTextAway.getText().toString())) {
+                            editMatch.setUsersTeamB(String.valueOf(Integer.valueOf(editMatch.getUsersTeamB()) + 1));
+                        } else {
+                            editMatch.setUsersDraw(String.valueOf(Integer.valueOf(editMatch.getUsersDraw()) + 1));
+                        }
+                        Log.d("Aguaecoco", editMatch.toString());
+                        matchModel.addMatch(DataSingleton.matches.get(position));
                     }
                 });
                 builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
