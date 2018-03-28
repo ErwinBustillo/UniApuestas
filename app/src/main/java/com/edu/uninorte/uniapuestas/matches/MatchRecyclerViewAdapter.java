@@ -21,9 +21,9 @@ import java.util.List;
 
 public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecyclerViewAdapter.ViewHolder>{
 
-    private List<Match> matchesData;
+    private List<MatchEntity> matchesData;
 
-    public MatchRecyclerViewAdapter(List<Match> data){
+    public MatchRecyclerViewAdapter(List<MatchEntity> data){
         this.matchesData=data;
     }
     @Override
@@ -35,7 +35,7 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
 
     @Override
     public void onBindViewHolder(MatchRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.textoNombrePartido.setText(matchesData.get(position).getHomeTeam()+" VS "+ matchesData.get(position).getAwayTeam()+"");
+        holder.textoNombrePartido.setText(matchesData.get(position).getTeamA()+" VS "+ matchesData.get(position).getTeamB()+"");
         holder.textoFecha.setText(matchesData.get(position).getDate()+"");
         holder.textoFase.setText("Fase de grupos");
 
@@ -48,8 +48,8 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
                 TextView textoHome = dialog.findViewById(R.id.textoHome);
                 TextView textoAway = dialog.findViewById(R.id.textoAway);
 
-                textoHome.setText(matchesData.get(position).getHomeTeam());
-                textoAway.setText(matchesData.get(position).getAwayTeam());
+                textoHome.setText(matchesData.get(position).getTeamA());
+                textoAway.setText(matchesData.get(position).getTeamB());
 
 
                 builder.setView(dialog);
@@ -69,9 +69,9 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
                 builder.show();
             }
         });
-        //holder.textoVotosTeamA.setText("Gana equipo A: "+matchesData.get(position).getUsersTeamA()+" Usuarios");
-        //holder.textoEmpates.setText("Empate: "+matchesData.get(position).getUsersDraw()+"Usuarios");
-        //holder.textoVotosTeamB.setText("Gana equipo B: "+matchesData.get(position).getUsersTeamB()+"Usuarios");
+        holder.textoVotosTeamA.setText("Gana equipo A: "+matchesData.get(position).getUsersTeamA()+" Usuarios");
+        holder.textoEmpates.setText("Empate: "+matchesData.get(position).getUsersDraw()+"Usuarios");
+        holder.textoVotosTeamB.setText("Gana equipo B: "+matchesData.get(position).getUsersTeamB()+"Usuarios");
     }
 
     @Override
@@ -79,7 +79,7 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
         return matchesData.size();
     }
 
-    public void setData(List<Match> data){this.matchesData=data;}
+    public void setData(List<MatchEntity> data){this.matchesData=data;}
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView textoNombrePartido;

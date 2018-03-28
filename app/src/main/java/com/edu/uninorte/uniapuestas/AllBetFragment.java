@@ -43,7 +43,7 @@ import java.util.List;
 public class AllBetFragment extends Fragment {
     RecyclerView rv;
     private MatchRecyclerViewAdapter adapter;
-    private List<Match> matches; // este es el que tiene la data del partido
+    private List<MatchEntity> matches; // este es el que tiene la data del partido
 
     private static final String JSON_ARRAY_REQUEST_URL = "https://api-mundial-movil.herokuapp.com/api/v1/matches";
     private static final String TAG = "MainActivity";
@@ -58,7 +58,7 @@ public class AllBetFragment extends Fragment {
         rv=view.findViewById(R.id.listaPartidos);
 
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        adapter = new MatchRecyclerViewAdapter(new ArrayList<Match>());
+        adapter = new MatchRecyclerViewAdapter(new ArrayList<MatchEntity>());
         rv.setAdapter(adapter);
 
         progressDialog = new ProgressDialog(view.getContext());
@@ -97,7 +97,7 @@ public class AllBetFragment extends Fragment {
                         String homeTeam = match.getJSONObject("home_team").getString("name");
                         String awayTeam = match.getJSONObject("away_team").getString("name");
 
-                        matches.add(new Match(id, group, fecha, finished, homeTeam, awayTeam));
+                        matches.add(new MatchEntity(id, homeTeam, awayTeam, fecha, "0", "0","0",true,"100"));
                     }
 
                     adapter.setData(matches);
