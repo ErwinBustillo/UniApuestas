@@ -28,9 +28,9 @@ public class MatchViewModel extends AndroidViewModel {
 
     }
 
-    /*public LiveData<List<MatchEntity>> getAllMatches() {
-        //return appDatabase.matchDao().allMatches();
-    }*/
+    public LiveData<List<MatchEntity>> getAllMatches() {
+        return appDatabase.matchDao().allMatches();
+    }
 
 
     public void addMatch(MatchEntity match){
@@ -42,7 +42,7 @@ public class MatchViewModel extends AndroidViewModel {
 
         @Override
         protected Void doInBackground(MatchEntity... item) {
-            //appDatabase.matchDao().insert(item[0]);
+            appDatabase.matchDao().insert(item[0]);
             return null;
         }
     }

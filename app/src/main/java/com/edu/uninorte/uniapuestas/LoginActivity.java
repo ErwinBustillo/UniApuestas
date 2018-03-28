@@ -40,11 +40,14 @@ public class LoginActivity extends AppCompatActivity {
         // adds Admin
         model = ViewModelProviders.of(this).get(UserViewModel.class);
         model.addUser(new UserEntity(1, "Admin", "admin@admin.com", "1234", true, "0"));
+        model.addUser(new UserEntity(2, "Mau", "mau@user.com", "1234", false, "0"));
+        model.addUser(new UserEntity(3, "Erwin", "erwin@user.com", "1234", false, "0"));
         //
 
         model.getAllUsers().observe(this, users -> {
-            usuarios = users;
-            Log.d("TAGASO", usuarios.get(0).toString());
+            for (UserEntity user: users) {
+                Log.d("TAGASo", user.toString());
+            }
         });
 
         textoEmail = findViewById(R.id.textoEmail);

@@ -49,6 +49,8 @@ public class AllBetFragment extends Fragment {
     ProgressDialog progressDialog;
     private View showDialogView;
 
+    private MatchViewModel model;
+
 
     @Nullable
     @Override
@@ -64,7 +66,19 @@ public class AllBetFragment extends Fragment {
 
         matches = new ArrayList<>();
 
-        volleyJsonArrayRequest(JSON_ARRAY_REQUEST_URL);
+        model = ViewModelProviders.of((FragmentActivity) getActivity()).get(MatchViewModel.class);
+
+        if(DataSingleton.currentUser.isAdmin()) {
+            volleyJsonArrayRequest(JSON_ARRAY_REQUEST_URL);
+        } else {
+            model.getAllMatches().observe((LifecycleOwner) getActivity(), matchEntities -> {
+                matches = matchEntities;
+                Log.d("TAgaso", matches.get(0) + "");
+                adapter.setData(matches);
+                adapter.notifyDataSetChanged();
+                DataSingleton.matches = matches;
+            });
+        }
 
         return view;
     }
@@ -97,6 +111,7 @@ public class AllBetFragment extends Fragment {
                         String awayTeam = match.getJSONObject("away_team").getString("name");
 
                         matches.add(new MatchEntity(id, homeTeam, awayTeam, fecha, "0", "0","0",true,"100"));
+                        model.addMatch(new MatchEntity(id, homeTeam, awayTeam, fecha, "0", "0","0",true,"100"));
                     }
 
                     adapter.setData(matches);
