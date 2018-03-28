@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import com.edu.uninorte.uniapuestas.users.UserEntity;
 import com.edu.uninorte.uniapuestas.users.UserViewModel;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by erwin on 3/11/2018.
@@ -27,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText textoEmail;
     EditText textoPassword;
     private UserViewModel model;
+    List<UserEntity> usuarios;
+    UserEntity u;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,10 @@ public class LoginActivity extends AppCompatActivity {
         model.addUser(new UserEntity(1, "Admin", "admin@admin.com", "password", true, "0"));
         //
 
-
+        model.getAllUsers().observe(this, users -> {
+            usuarios = users;
+            Log.d("TAGASO", usuarios.get(0).toString());
+        });
 
         textoEmail = findViewById(R.id.textoEmail);
         textoPassword = findViewById(R.id.textoPassword);
@@ -61,16 +68,21 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        LiveData<UserEntity> user = model.getUser(textoEmail.getText().toString(), textoPassword.getText().toString());
 
-        if(user != null) {
-            // hacer la validacion de los datos del servidor
-            Intent i = new Intent(view.getContext(),PrincipalActivity.class);
-            // i.putExtra("user", (Serializable) user); TODO Buscar como se debe serializar
-            startActivity(i);
-        } else {
-            Toast.makeText(this,"CREDENCIALES INVALIDAS",Toast.LENGTH_SHORT).show();
-        }
+
+        model.getUser(textoEmail.getText().toString(), textoPassword.getText().toString()).observe(this, user -> {
+            u = user;
+
+            if(u != null) {
+                Log.d("TAGASO", u.toString());
+                // hacer la validacion de los datos del servidor
+                Intent i = new Intent(view.getContext(),PrincipalActivity.class);
+                i.putExtra("user", (Serializable) u);
+                startActivity(i);
+            } else {
+                Toast.makeText(this,"CREDENCIALES INVALIDAS",Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

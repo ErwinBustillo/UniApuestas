@@ -30,6 +30,10 @@ public class UserViewModel extends AndroidViewModel {
         return data;
     }
 
+    public LiveData<List<UserEntity>> getAllUsers() {
+        return appDatabase.userDao().allUsers();
+    }
+
     public LiveData<UserEntity> getUser(String email, String password) {
         return appDatabase.userDao().loginUser(email, password);
     }

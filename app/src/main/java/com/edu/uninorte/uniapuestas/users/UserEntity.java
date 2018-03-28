@@ -4,12 +4,14 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 /**
  * Created by Visitante on 5/03/2018.
  */
 
 @Entity
-public class UserEntity {
+public class UserEntity implements Serializable {
     @PrimaryKey
     private int uid;
     @ColumnInfo(name = "name")
@@ -81,5 +83,17 @@ public class UserEntity {
 
     public void setPoints(String points) {
         this.points = points;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "uid=" + uid +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", isAdmin=" + isAdmin +
+                ", points='" + points + '\'' +
+                '}';
     }
 }

@@ -6,6 +6,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
+import java.util.List;
+
 /**
  * Created by Visitante on 5/03/2018.
  */
@@ -15,6 +17,9 @@ public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(UserEntity user);
+
+    @Query("SELECT * FROM userentity")
+    LiveData<List<UserEntity>> allUsers();
 
     @Query("SELECT * FROM userentity WHERE admin = :isAdmin")
     LiveData<UserEntity> loadAdminUser(boolean isAdmin);
