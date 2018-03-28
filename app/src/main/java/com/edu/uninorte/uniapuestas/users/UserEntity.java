@@ -26,12 +26,13 @@ public class UserEntity {
     //Arreglo de apuestas FIXME
 
 
-    public UserEntity(int uid, String name, String email, String password, boolean isAdmin) {
+    public UserEntity(int uid, String name, String email, String password, boolean isAdmin, String points) {
         this.uid = uid;
         this.name = name;
         this.email = email;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.points = points;
     }
 
     public int getUid() {
@@ -72,5 +73,13 @@ public class UserEntity {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public String getPoints() {
+        return points;
+    }
+
+    public void setPoints(String points) {
+        this.points = points;
     }
 }
