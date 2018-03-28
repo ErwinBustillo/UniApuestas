@@ -58,6 +58,7 @@
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/btnApostar"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="100dp"
             android:layout_height="40dp"

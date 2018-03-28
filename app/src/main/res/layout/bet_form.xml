@@ -10,6 +10,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/textoHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="HOME TEAM"
@@ -18,6 +19,7 @@
             android:textSize="30sp" />
 
         <TextView
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="VS"
@@ -26,6 +28,7 @@
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/textoAway"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="AWAY TEAM"
