@@ -1,5 +1,6 @@
 package com.edu.uninorte.uniapuestas;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -7,9 +8,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.edu.uninorte.uniapuestas.users.UserEntity;
+import com.edu.uninorte.uniapuestas.users.UserViewModel;
+
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -17,6 +24,11 @@ public class RegisterActivity extends AppCompatActivity {
     EditText textoEmail;
     EditText textoPassword;
     EditText textoConfirmPassword;
+
+    private UserViewModel model;
+    List<UserEntity> usuarios;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +43,12 @@ public class RegisterActivity extends AppCompatActivity {
         textoEmail.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorUnderline), PorterDuff.Mode.SRC_ATOP);
         textoPassword.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorUnderline), PorterDuff.Mode.SRC_ATOP);
         textoConfirmPassword.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorUnderline), PorterDuff.Mode.SRC_ATOP);
+
+        model = ViewModelProviders.of(this).get(UserViewModel.class);
+        model.getAllUsers().observe(this, users -> {
+            usuarios = users;
+
+        });
     }
 
     public void onClickLabelGoBackLogin(View view) {
@@ -60,6 +78,11 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(view.getContext(),"Los passwords no coinciden",Toast.LENGTH_SHORT).show();
             return;
         }
+
+        //Agregamos el registro del usuario a la base de datos
+        model.addUser(new UserEntity(usuarios.size()+1,textoNombre.getText().toString(),textoEmail.getText().toString(),textoPassword.getText().toString(),false,"0"));
+
+        Toast.makeText(this,"USUARIO CREADO",Toast.LENGTH_SHORT).show();
 
         Intent i = new Intent(this,LoginActivity.class);
         startActivity(i);
