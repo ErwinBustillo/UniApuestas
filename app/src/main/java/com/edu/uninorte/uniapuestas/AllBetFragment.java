@@ -44,11 +44,6 @@ public class AllBetFragment extends Fragment {
     private MatchRecyclerViewAdapter adapter;
     private List<MatchEntity> matches; // este es el que tiene la data del partido
 
-    private static final String JSON_ARRAY_REQUEST_URL = "https://api-mundial-movil.herokuapp.com/api/v1/matches";
-    private static final String TAG = "MainActivity";
-    ProgressDialog progressDialog;
-    private View showDialogView;
-
     private MatchViewModel model;
 
 
@@ -62,75 +57,17 @@ public class AllBetFragment extends Fragment {
         adapter = new MatchRecyclerViewAdapter(new ArrayList<MatchEntity>());
         rv.setAdapter(adapter);
 
-        progressDialog = new ProgressDialog(view.getContext());
-
         matches = new ArrayList<>();
 
         model = ViewModelProviders.of((FragmentActivity) getActivity()).get(MatchViewModel.class);
-
-        if(DataSingleton.currentUser.isAdmin()) {
-            volleyJsonArrayRequest(JSON_ARRAY_REQUEST_URL);
-        } else {
-            model.getAllMatches().observe((LifecycleOwner) getActivity(), matchEntities -> {
-                matches = matchEntities;
-                Log.d("TAgaso", matches.get(0) + "");
-                adapter.setData(matches);
-                adapter.notifyDataSetChanged();
-                DataSingleton.matches = matches;
-            });
-        }
+        model.getAllMatches().observe((LifecycleOwner) getActivity(), matchEntities -> {
+            matches = matchEntities;
+            Log.d("TAgaso", matches.get(0) + "");
+            adapter.setData(matches);
+            adapter.notifyDataSetChanged();
+            DataSingleton.matches = matches;
+        });
 
         return view;
-    }
-
-    public void volleyJsonArrayRequest(String url){
-
-        String  REQUEST_TAG = "com.androidtutorialpoint.volleyJsonArrayRequest";
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
-
-        JsonArrayRequest jsonArrayReq = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Log.d(TAG, response.toString());
-                LayoutInflater li = LayoutInflater.from(getActivity());
-                showDialogView = li.inflate(R.layout.show_dialog, null);
-
-                /// filtro de datos del json
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject match = response.getJSONObject(i);
-
-                        Log.d("TAGASO", match.toString());
-
-                        int id = match.getInt("id");
-                        String group = match.getString("group");
-                        String fecha = match.getString("date");
-                        boolean finished = match.getBoolean("finished");
-                        String homeTeam = match.getJSONObject("home_team").getString("name");
-                        String awayTeam = match.getJSONObject("away_team").getString("name");
-
-                        matches.add(new MatchEntity(id, homeTeam, awayTeam, fecha, "0", "0","0",true,"100"));
-                        model.addMatch(new MatchEntity(id, homeTeam, awayTeam, fecha, "0", "0","0",true,"100"));
-                    }
-
-                    adapter.setData(matches);
-                    adapter.notifyDataSetChanged();
-                    DataSingleton.matches = matches;
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                progressDialog.hide();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                progressDialog.hide();
-            }
-        });
-        // Adding JsonObject request to request queue
-        VolleySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayReq, REQUEST_TAG);
     }
 }
