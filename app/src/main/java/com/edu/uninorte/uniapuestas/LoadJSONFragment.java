@@ -89,8 +89,8 @@ public class LoadJSONFragment extends Fragment {
                         String homeTeam = match.getJSONObject("home_team").getString("name");
                         String awayTeam = match.getJSONObject("away_team").getString("name");
 
-                        matches.add(new MatchEntity(id, homeTeam, awayTeam, fecha, "0", "0","0",true,"100"));
-                        model.addMatch(new MatchEntity(id, homeTeam, awayTeam, fecha, "0", "0","0",true,"100"));
+                        matches.add(new MatchEntity(id, homeTeam, awayTeam, fecha, "0", "0","0",true,"100", null, null));
+                        model.addMatch(new MatchEntity(id, homeTeam, awayTeam, fecha, "0", "0","0",true,"100", null, null));
                     }
                     DataSingleton.matches = matches;
 

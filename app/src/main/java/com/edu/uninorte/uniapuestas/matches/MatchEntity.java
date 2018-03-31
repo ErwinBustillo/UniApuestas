@@ -28,8 +28,12 @@ public class MatchEntity {
     private boolean isOpen;
     @ColumnInfo(name = "match_points")
     private String matchPoints;
+    @ColumnInfo(name = "real_score_teamA")
+    private String real_score_teamA;
+    @ColumnInfo(name = "real_score_teamB")
+    private String real_score_teamB;
 
-    public MatchEntity(int id, String teamA, String teamB, String date, String usersTeamA, String usersTeamB, String usersDraw, boolean isOpen, String matchPoints) {
+    public MatchEntity(int id, String teamA, String teamB, String date, String usersTeamA, String usersTeamB, String usersDraw, boolean isOpen, String matchPoints, String real_score_teamA, String real_score_teamB) {
         this.id = id;
         this.teamA = teamA;
         this.teamB = teamB;
@@ -39,6 +43,8 @@ public class MatchEntity {
         this.usersDraw = usersDraw;
         this.isOpen = isOpen;
         this.matchPoints = matchPoints;
+        this.real_score_teamA = real_score_teamA;
+        this.real_score_teamB = real_score_teamB;
     }
 
     public int getId() {
@@ -111,6 +117,22 @@ public class MatchEntity {
 
     public void setMatchPoints(String matchPoints) {
         this.matchPoints = matchPoints;
+    }
+
+    public String getReal_score_teamA() {
+        return real_score_teamA;
+    }
+
+    public void setReal_score_teamA(String real_score_teamA) {
+        this.real_score_teamA = real_score_teamA;
+    }
+
+    public String getReal_score_teamB() {
+        return real_score_teamB;
+    }
+
+    public void setReal_score_teamB(String real_score_teamB) {
+        this.real_score_teamB = real_score_teamB;
     }
 
     @Override

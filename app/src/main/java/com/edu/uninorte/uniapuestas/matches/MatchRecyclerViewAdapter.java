@@ -70,7 +70,7 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
 
                         betModel.getAllBets().observe((LifecycleOwner) dialog.getContext(), betEntities -> {
                             for (BetEntity test: betEntities) {
-                                Log.d("TAGASo", test.toString());
+                                Log.d("Apuestas", test.toString());
                             }
                         });
 
@@ -84,19 +84,58 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
                             editMatch.setUsersDraw(String.valueOf(Integer.valueOf(editMatch.getUsersDraw()) + 1));
                         }
                         Log.d("Aguaecoco", editMatch.toString());
-                        matchModel.addMatch(DataSingleton.matches.get(position));
+                        matchModel.addMatch(editMatch);
                     }
                 });
                 builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                     }
                 });
                 builder.setCancelable(false);
                 builder.show();
             }
         });
+
+
+        holder.btnDefinir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Cerrar partido");
+                View dialog = LayoutInflater.from(view.getContext()).inflate(R.layout.bet_form, null, false);
+                TextView textoHome = dialog.findViewById(R.id.textoHome);
+                TextView textoAway = dialog.findViewById(R.id.textoAway);
+                EditText editTextHome = dialog.findViewById(R.id.editTextHomeTeam);
+                EditText editTextAway = dialog.findViewById(R.id.editTextAwayTeam);
+                textoHome.setText(matchesData.get(position).getTeamA());
+                textoAway.setText(matchesData.get(position).getTeamB());
+
+
+                builder.setView(dialog);
+                builder.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        matchModel = ViewModelProviders.of((FragmentActivity) dialog.getContext()).get(MatchViewModel.class);
+                        MatchEntity editMatch = DataSingleton.matches.get(position);
+                        Log.d("Aguaecoco", editMatch.toString());
+                        editMatch.setOpen(false);
+                        editMatch.setReal_score_teamA(editTextHome.getText().toString());
+                        editMatch.setReal_score_teamB(editTextAway.getText().toString());
+                        matchModel.addMatch(editMatch);
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+            }
+        });
+
         holder.textoVotosTeamA.setText("Gana equipo A: "+matchesData.get(position).getUsersTeamA()+" Usuarios");
         holder.textoEmpates.setText("Empate: "+matchesData.get(position).getUsersDraw()+"Usuarios");
         holder.textoVotosTeamB.setText("Gana equipo B: "+matchesData.get(position).getUsersTeamB()+"Usuarios");
@@ -117,6 +156,7 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
         TextView textoEmpates;
         TextView textoVotosTeamB;
         Button btnApostar;
+        Button btnDefinir;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -127,6 +167,15 @@ public class MatchRecyclerViewAdapter extends RecyclerView.Adapter<MatchRecycler
             textoEmpates = itemView.findViewById(R.id.textoEmpates);
             textoVotosTeamB = itemView.findViewById(R.id.textoVotosTeamB);
             btnApostar = itemView.findViewById(R.id.btnApostar);
+            btnDefinir = itemView.findViewById(R.id.btnDefinir);
+
+            if (DataSingleton.currentUser.isAdmin()) {
+                btnDefinir.setVisibility(View.VISIBLE);
+                btnApostar.setVisibility(View.INVISIBLE);
+            } else {
+                btnDefinir.setVisibility(View.INVISIBLE);
+                btnApostar.setVisibility(View.VISIBLE);
+            }
         }
 
         public Button getBtnApostar() {
