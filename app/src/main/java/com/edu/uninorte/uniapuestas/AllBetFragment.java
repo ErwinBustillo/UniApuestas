@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -61,6 +62,7 @@ public class AllBetFragment extends Fragment {
         rv=view.findViewById(R.id.listaPartidos);
 
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rv.addItemDecoration(new DividerItemDecoration(view.getContext(),  LinearLayoutManager.VERTICAL));
         adapter = new MatchRecyclerViewAdapter(new ArrayList<MatchEntity>());
         rv.setAdapter(adapter);
 

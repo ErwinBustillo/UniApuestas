@@ -32,7 +32,7 @@ import java.util.List;
 
 public class LoadJSONFragment extends Fragment {
 
-    EditText textoUrl;
+
     Button btnLoadJSON;
     private static final String JSON_ARRAY_REQUEST_URL = "https://api-mundial-movil.herokuapp.com/api/v1/matches";
     private static final String TAG = "MainActivity";
@@ -44,8 +44,7 @@ public class LoadJSONFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.load_json_fragment,container,false);
-        textoUrl = view.findViewById(R.id.editTextJsonURL);
-        textoUrl.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorUnderline), PorterDuff.Mode.SRC_ATOP);
+
         btnLoadJSON = view.findViewById(R.id.btnLoadJSON);
         progressDialog = new ProgressDialog(view.getContext());
         matches = new ArrayList<>();

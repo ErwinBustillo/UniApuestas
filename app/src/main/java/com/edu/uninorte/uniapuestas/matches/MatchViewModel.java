@@ -32,6 +32,9 @@ public class MatchViewModel extends AndroidViewModel {
         return appDatabase.matchDao().allMatches();
     }
 
+    public LiveData<MatchEntity> getMatchById(String match_id) {
+        return appDatabase.matchDao().getMatchById(match_id);
+    }
 
     public void addMatch(MatchEntity match){
 

@@ -29,6 +29,10 @@ public class BetViewModel extends AndroidViewModel{
         return appDatabase.betDao().allBets();
     }
 
+    public LiveData<List<BetEntity>> getAllBetsUser(String user_id){
+        return appDatabase.betDao().getAllBetsUser(user_id);
+    }
+
     public LiveData<BetEntity> getUserBet(String user_id, String match_id) {
         return appDatabase.betDao().getUserBet(user_id, match_id);
     }

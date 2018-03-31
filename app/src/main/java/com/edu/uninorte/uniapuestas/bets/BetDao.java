@@ -22,4 +22,8 @@ public interface BetDao {
 
     @Query("SELECT * FROM betentity WHERE user_id = :user_id AND match_id = :match_id")
     LiveData<BetEntity> getUserBet(String user_id, String match_id);
+
+
+    @Query("SELECT * FROM betentity WHERE user_id = :user_id")
+    LiveData<List<BetEntity>> getAllBetsUser(String user_id);
 }

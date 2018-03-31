@@ -9,4 +9,5 @@ import java.util.List;
 public class DataSingleton {
     public static UserEntity currentUser;
     public static List<MatchEntity> matches;
+    public static List<BetEntity> bets;
 }

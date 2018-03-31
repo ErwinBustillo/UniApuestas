@@ -19,5 +19,8 @@ public interface MatchDao {
 
     @Query("SELECT * FROM matchentity")
     LiveData<List<MatchEntity>> allMatches();
+
+    @Query("SELECT * FROM matchentity WHERE id = :match_id")
+    LiveData<MatchEntity> getMatchById(String match_id);
     
 }
