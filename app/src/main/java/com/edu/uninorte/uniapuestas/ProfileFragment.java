@@ -36,11 +36,10 @@ public class ProfileFragment extends Fragment {
         userModel = ViewModelProviders.of((FragmentActivity) getActivity()).get(UserViewModel.class);
 
         Log.d("USERNEW",DataSingleton.currentUser.toString());
-        DataSingleton.currentUser.setName(editTextNombre.getText().toString() + ""); // se actualiza el nombre del usuario
-
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DataSingleton.currentUser.setName(editTextNombre.getText().toString() + ""); // se actualiza el nombre del usuario
                 if (editTextNombre.getText().toString().equals("")) return;
                 userModel.addUser(DataSingleton.currentUser); // aqui se sobreescribe el usuario actual con el nuevo nombre //revisar nombre queda empty en tabla
                 Log.d("USERNEW",DataSingleton.currentUser.toString());
