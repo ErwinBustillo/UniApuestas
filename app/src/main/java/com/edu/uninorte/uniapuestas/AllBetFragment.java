@@ -80,7 +80,9 @@ public class AllBetFragment extends Fragment {
                     if (!DataSingleton.currentUser.isAdmin()) {
                         betModel.getUserBet(DataSingleton.currentUser.getUid() + "", matchEntity.getId() + "").observe((FragmentActivity) getActivity(), betEntity -> {
 
-                            if (matchEntity.getReal_score_teamB() != null && matchEntity.getReal_score_teamA() != null) {
+                            if (betEntity == null) return;
+
+                            if (matchEntity.getReal_score_teamB() != null && matchEntity.getReal_score_teamA() != null && betEntity.getScoreA() !=null && betEntity.getScoreB() !=null) {
                                 if (betEntity.getScoreA().equals(matchEntity.getReal_score_teamA()) && betEntity.getScoreB().equals(matchEntity.getReal_score_teamB())) {
 
                                     DataSingleton.currentUser.setPoints("" + (Integer.parseInt(DataSingleton.currentUser.getPoints()) + Integer.parseInt(matchEntity.getMatchPoints())));

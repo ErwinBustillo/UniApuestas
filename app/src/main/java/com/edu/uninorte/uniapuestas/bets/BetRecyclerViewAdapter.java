@@ -70,7 +70,7 @@ public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerView
                 holder.textoVotosTeamA.setText("Gana equipo A: "+matchEntity.getUsersTeamA()+" Usuarios");
                 holder.textoEmpates.setText("Empate: "+matchEntity.getUsersDraw()+" Usuarios");
                 holder.textoVotosTeamB.setText("Gana equipo B: "+matchEntity.getUsersTeamB()+" Usuarios");
-                holder.textoStatus.setText("ESTADO: "+ matchEntity.isOpen());
+                holder.textoStatus.setText("ESTADO: "+  (matchEntity.isOpen() ? "ABIERTO": "CERRADO"));
                 holder.textoScoreBet.setText("TU RESULTADO : " + betEntity.getScoreA() + " a " + betEntity.getScoreB());
                 //Log.d("BetRecyclerViewAdapter", position + " posición");
                 //Log.d("BetRecyclerViewAdapter", matchData.get(position).toString());
