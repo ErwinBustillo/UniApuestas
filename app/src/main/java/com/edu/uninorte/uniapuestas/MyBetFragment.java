@@ -56,14 +56,7 @@ public class MyBetFragment extends Fragment {
 
 
         betModel.getAllBetsUser(DataSingleton.currentUser.getUid()+"").observe((LifecycleOwner) getActivity(), betsEntities -> {
-            for (BetEntity entity: betsEntities) {
-                Log.d("Aguaecoco", entity.toString());
-                matchModel.getMatchById(entity.getMatchId()).observe((LifecycleOwner) getActivity(), matchEntity -> {
-                    matches.add(matchEntity);
-                });
-            }
             apuestas=betsEntities;
-            Log.d("elloco", matches.size() + "");
             adapter.setData(apuestas, matches);
             adapter.notifyDataSetChanged();
             DataSingleton.bets = apuestas;
