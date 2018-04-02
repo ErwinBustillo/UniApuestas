@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,9 @@ public class MyBetFragment extends Fragment {
 
 
         betModel.getAllBetsUser(DataSingleton.currentUser.getUid()+"").observe((LifecycleOwner) getActivity(), betsEntities -> {
+            for (BetEntity entity: betsEntities) {
+                Log.d("Aguaecoco", entity.toString());
+            }
             apuestas=betsEntities;
             adapter.setData(apuestas);
             adapter.notifyDataSetChanged();

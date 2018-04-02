@@ -1,19 +1,30 @@
 package com.edu.uninorte.uniapuestas.bets;
 
+import android.app.AlertDialog;
+import android.app.Application;
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.edu.uninorte.uniapuestas.DataSingleton;
 import com.edu.uninorte.uniapuestas.R;
+import com.edu.uninorte.uniapuestas.matches.MatchEntity;
 import com.edu.uninorte.uniapuestas.matches.MatchViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.edu.uninorte.uniapuestas.DataSingleton.matches;
 
 /**
  * Created by Visitante on 5/03/2018.
@@ -22,6 +33,7 @@ import java.util.List;
 public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerViewAdapter.ViewHolder> {
 
     private List<BetEntity> betsData;
+    private List<MatchEntity> matchesData;
 
     private BetViewModel betModel;
     private MatchViewModel matchModel;
@@ -42,27 +54,80 @@ public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerView
     @Override
     public void onBindViewHolder(BetRecyclerViewAdapter.ViewHolder holder, int position) {
 
-        //betModel = ViewModelProviders.of((FragmentActivity) ).get(BetViewModel.class); //FIXEME
+        betModel = ViewModelProviders.of((FragmentActivity) holder.itemView.getContext()).get(BetViewModel.class); //FIXEME
 
-        holder.textoScoreBet.setText("TU RESULTADO : " +betsData.get(position).getScoreA() + " a " + betsData.get(position).getScoreB());
 
-        //matchModel = ViewModelProviders.of((FragmentActivity) getActivity()).get(MatchViewModel.class);
-        //AQUI FALTA ITERAR LOS BETS DEL USUARIO LUEGO SACAR EL ID DE CADA BET PARA FILTRAR LOS MATCHES Y SETEAR LA DATA DE MATCHES EN ESTOS HOLDER TEXT
-        /*
-        holder.textoPartidoBet.setText(matchesData.get(position).getTeamA()+" VS "+ matchesData.get(position).getTeamB()+"");
-        holder.textoFechaBet.setText(matchesData.get(position).getDate()+"");
-        holder.textoFase.setText("Fase de grupos");
-        holder.textoVotosTeamA.setText("Gana equipo A: "+matchesData.get(position).getUsersTeamA()+" Usuarios");
-        holder.textoEmpates.setText("Empate: "+matchesData.get(position).getUsersDraw()+"Usuarios");
-        holder.textoVotosTeamB.setText("Gana equipo B: "+matchesData.get(position).getUsersTeamB()+"Usuarios");
-        holder.textoStatus.setText("ESTADO: "+ matches.getFinished);
+
+        matchModel = ViewModelProviders.of((FragmentActivity) holder.itemView.getContext()).get(MatchViewModel.class);
+        for(BetEntity betEntity: betsData) {
+            Log.d("BetRecyclerViewAdapter", betEntity.toString());
+            matchModel.getMatchById(betEntity.getMatchId() + "").observe((LifecycleOwner) holder.itemView.getContext(), matchEntity -> {
+                //matchData.add(matchEntity);
+                holder.textoPartidoBet.setText(matchEntity.getTeamA()+" VS "+ matchEntity.getTeamB()+"");
+
+                holder.textoFechaBet.setText(matchEntity.getDate()+"");
+                holder.textoFase.setText("Fase de grupos");
+                holder.textoVotosTeamA.setText("Gana equipo A: "+matchEntity.getUsersTeamA()+" Usuarios");
+                holder.textoEmpates.setText("Empate: "+matchEntity.getUsersDraw()+" Usuarios");
+                holder.textoVotosTeamB.setText("Gana equipo B: "+matchEntity.getUsersTeamB()+" Usuarios");
+                holder.textoStatus.setText("ESTADO: "+ matchEntity.isOpen());
+                holder.textoScoreBet.setText("TU RESULTADO : " +betsData.get(position+1).getScoreA() + " a " + betsData.get(position+1).getScoreB());
+
+            });
+
+        }
+        //Log.d("BetRecyclerViewAdapter", position + " posición");
+        //Log.d("BetRecyclerViewAdapter", matchData.get(position).toString());
+
         holder.btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Hacer apuestas");
+                View dialog = LayoutInflater.from(view.getContext()).inflate(R.layout.bet_form, null, false);
+                TextView textoHome = dialog.findViewById(R.id.textoHome);
+                TextView textoAway = dialog.findViewById(R.id.textoAway);
+                EditText editTextHome = dialog.findViewById(R.id.editTextHomeTeam);
+                EditText editTextAway = dialog.findViewById(R.id.editTextAwayTeam);
+                textoHome.setText(matchData.get(position).getTeamA());
+                textoAway.setText(matchData.get(position).getTeamB());
 
+
+                builder.setView(dialog);
+                builder.setPositiveButton("Apostar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        betModel = ViewModelProviders.of((FragmentActivity) dialog.getContext()).get(BetViewModel.class);
+                        betModel.addBet(new BetEntity((position) + "", DataSingleton.currentUser.getUid() + "", DataSingleton.matches.get(position).getId() + "",editTextHome.getText().toString(),editTextAway.getText().toString()));
+
+                        betModel.getAllBets().observe((LifecycleOwner) dialog.getContext(), betEntities -> {
+                            for (BetEntity test: betEntities) {
+                                Log.d("Apuestas", test.toString());
+                            }
+                        });
+
+                        matchModel = ViewModelProviders.of((FragmentActivity) dialog.getContext()).get(MatchViewModel.class);
+                        MatchEntity editMatch = DataSingleton.matches.get(position);
+//                            if(Integer.valueOf(editTextHome.getText().toString()) > Integer.valueOf(editTextAway.getText().toString())) {
+//                                editMatch.setUsersTeamA(String.valueOf(Integer.valueOf(editMatch.getUsersTeamA()) + 1));
+//                            } else if (Integer.valueOf(editTextHome.getText().toString()) < Integer.valueOf(editTextAway.getText().toString())) {
+//                                editMatch.setUsersTeamB(String.valueOf(Integer.valueOf(editMatch.getUsersTeamB()) + 1));
+//                            } else {
+//                                editMatch.setUsersDraw(String.valueOf(Integer.valueOf(editMatch.getUsersDraw()) + 1));
+//                            }
+                        Log.d("Aguaecoco", editMatch.toString());
+                        matchModel.addMatch(editMatch);
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
             }
-        });*/
-
+        });
     }
 
     @Override
@@ -97,8 +162,6 @@ public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerView
             textoScoreBet= itemView.findViewById(R.id.TextViewScoreBet);
             textoStatus = itemView.findViewById(R.id.TextViewStatusBet);
             btnEditar = itemView.findViewById(R.id.btnEditar);
-
-
         }
     }
 }
