@@ -23,6 +23,7 @@ import com.edu.uninorte.uniapuestas.users.UserEntity;
 public class PrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    UserEntity u;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,7 @@ public class PrincipalActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         Intent i = getIntent();
-        UserEntity u = (UserEntity) i.getSerializableExtra("user");
+        u = (UserEntity) i.getSerializableExtra("user");
         Log.d("Tagaso Principal", u.toString());
 
         getSupportActionBar().setSubtitle(DataSingleton.currentUser.getName().toString() + " " + "\n"+ "Points :" + u.getPoints());
@@ -80,17 +81,21 @@ public class PrincipalActivity extends AppCompatActivity
         int id = item.getItemId();
         if(id == R.id.nav_verApuestas){
             getSupportActionBar().setTitle("UniApuestas");
+            getSupportActionBar().setSubtitle(DataSingleton.currentUser.getName().toString() + " " + "\n"+ "Points :" + u.getPoints());
             setFragment(0);
         }else if (id == R.id.nav_misApuestas) {
             getSupportActionBar().setTitle("Mis Apuestas");
+            getSupportActionBar().setSubtitle(DataSingleton.currentUser.getName().toString() + " " + "\n"+ "Points :" + u.getPoints());
             setFragment(1);
             // Handle the camera action
         } else if (id == R.id.nav_perfil) {
             getSupportActionBar().setTitle("Mi Perfil");
+            getSupportActionBar().setSubtitle(DataSingleton.currentUser.getName().toString() + " " + "\n"+ "Points :" + u.getPoints());
            setFragment(2);
         }else if (id == R.id.nav_LoadJSON) {
             if (DataSingleton.currentUser.isAdmin()){
                 getSupportActionBar().setTitle("Cargar Partidos");
+                getSupportActionBar().setSubtitle(DataSingleton.currentUser.getName().toString() + " " + "\n"+ "Points :" + u.getPoints());
                 setFragment(3);
             }
             else{
