@@ -71,7 +71,7 @@ public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerView
                 holder.textoEmpates.setText("Empate: "+matchEntity.getUsersDraw()+" Usuarios");
                 holder.textoVotosTeamB.setText("Gana equipo B: "+matchEntity.getUsersTeamB()+" Usuarios");
                 holder.textoStatus.setText("ESTADO: "+ matchEntity.isOpen());
-                holder.textoScoreBet.setText("TU RESULTADO : " +betsData.get(position).getScoreA() + " a " + betsData.get(position).getScoreB());
+                holder.textoScoreBet.setText("TU RESULTADO : " + betEntity.getScoreA() + " a " + betEntity.getScoreB());
                 //Log.d("BetRecyclerViewAdapter", position + " posición");
                 //Log.d("BetRecyclerViewAdapter", matchData.get(position).toString());
 
@@ -79,7 +79,7 @@ public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerView
                     @Override
                     public void onClick(View view) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                        builder.setTitle("Hacer apuestas");
+                        builder.setTitle("Editar apuesta");
                         View dialog = LayoutInflater.from(view.getContext()).inflate(R.layout.bet_form, null, false);
                         TextView textoHome = dialog.findViewById(R.id.textoHome);
                         TextView textoAway = dialog.findViewById(R.id.textoAway);
@@ -94,7 +94,7 @@ public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerView
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 betModel = ViewModelProviders.of((FragmentActivity) dialog.getContext()).get(BetViewModel.class);
-                                betModel.addBet(new BetEntity((position) + "", DataSingleton.currentUser.getUid() + "", DataSingleton.matches.get(position).getId() + "",editTextHome.getText().toString(),editTextAway.getText().toString()));
+                                betModel.addBet(new BetEntity(betEntity.getBid() + "", DataSingleton.currentUser.getUid() + "", matchEntity.getId() + "",editTextHome.getText().toString(),editTextAway.getText().toString()));
 
                                 betModel.getAllBets().observe((LifecycleOwner) dialog.getContext(), betEntities -> {
                                     for (BetEntity test: betEntities) {
