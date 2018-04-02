@@ -38,11 +38,12 @@ public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerView
     private BetViewModel betModel;
     private MatchViewModel matchModel;
 
-    public BetRecyclerViewAdapter(List<BetEntity> data){
+    public BetRecyclerViewAdapter(List<BetEntity> data, List<MatchEntity> data2){
         this.betsData=data;
+        this.matchesData=data2;
     } // constructor
 
-    public void setData(List<BetEntity> data){this.betsData=data;}
+    public void setData(List<BetEntity> data, List<MatchEntity> data2){this.betsData=data; this.matchesData=data2;}
 
     @Override
     public BetRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -59,23 +60,16 @@ public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerView
 
 
         matchModel = ViewModelProviders.of((FragmentActivity) holder.itemView.getContext()).get(MatchViewModel.class);
-        for(BetEntity betEntity: betsData) {
-            Log.d("BetRecyclerViewAdapter", betEntity.toString());
-            matchModel.getMatchById(betEntity.getMatchId() + "").observe((LifecycleOwner) holder.itemView.getContext(), matchEntity -> {
-                //matchData.add(matchEntity);
-                holder.textoPartidoBet.setText(matchEntity.getTeamA()+" VS "+ matchEntity.getTeamB()+"");
 
-                holder.textoFechaBet.setText(matchEntity.getDate()+"");
-                holder.textoFase.setText("Fase de grupos");
-                holder.textoVotosTeamA.setText("Gana equipo A: "+matchEntity.getUsersTeamA()+" Usuarios");
-                holder.textoEmpates.setText("Empate: "+matchEntity.getUsersDraw()+" Usuarios");
-                holder.textoVotosTeamB.setText("Gana equipo B: "+matchEntity.getUsersTeamB()+" Usuarios");
-                holder.textoStatus.setText("ESTADO: "+ matchEntity.isOpen());
-                holder.textoScoreBet.setText("TU RESULTADO : " +betsData.get(position+1).getScoreA() + " a " + betsData.get(position+1).getScoreB());
+        holder.textoPartidoBet.setText(matchesData.get(position).getTeamA()+" VS "+ matchesData.get(position).getTeamB()+"");
 
-            });
-
-        }
+        holder.textoFechaBet.setText(matchesData.get(position).getDate()+"");
+        holder.textoFase.setText("Fase de grupos");
+        holder.textoVotosTeamA.setText("Gana equipo A: "+matchesData.get(position).getUsersTeamA()+" Usuarios");
+        holder.textoEmpates.setText("Empate: "+matchesData.get(position).getUsersDraw()+" Usuarios");
+        holder.textoVotosTeamB.setText("Gana equipo B: "+matchesData.get(position).getUsersTeamB()+" Usuarios");
+        holder.textoStatus.setText("ESTADO: "+ matchesData.get(position).isOpen());
+        holder.textoScoreBet.setText("TU RESULTADO : " +betsData.get(position+1).getScoreA() + " a " + betsData.get(position+1).getScoreB());
         //Log.d("BetRecyclerViewAdapter", position + " posición");
         //Log.d("BetRecyclerViewAdapter", matchData.get(position).toString());
 
@@ -89,8 +83,8 @@ public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerView
                 TextView textoAway = dialog.findViewById(R.id.textoAway);
                 EditText editTextHome = dialog.findViewById(R.id.editTextHomeTeam);
                 EditText editTextAway = dialog.findViewById(R.id.editTextAwayTeam);
-                textoHome.setText(matchData.get(position).getTeamA());
-                textoAway.setText(matchData.get(position).getTeamB());
+                textoHome.setText(matchesData.get(position).getTeamA());
+                textoAway.setText(matchesData.get(position).getTeamB());
 
 
                 builder.setView(dialog);
