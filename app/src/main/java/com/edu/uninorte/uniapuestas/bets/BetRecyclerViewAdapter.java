@@ -42,7 +42,9 @@ public class BetRecyclerViewAdapter extends RecyclerView.Adapter<BetRecyclerView
     @Override
     public void onBindViewHolder(BetRecyclerViewAdapter.ViewHolder holder, int position) {
 
-        //betModel = ViewModelProviders.of((FragmentActivity) ).get(BetViewModel.class); //FIXEME
+        betModel = ViewModelProviders.of((FragmentActivity) holder.itemView.getContext()).get(BetViewModel.class); //FIXEME
+
+
 
         holder.textoScoreBet.setText("TU RESULTADO : " +betsData.get(position).getScoreA() + " a " + betsData.get(position).getScoreB());
 
