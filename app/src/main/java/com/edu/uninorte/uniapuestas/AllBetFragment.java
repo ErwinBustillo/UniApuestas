@@ -78,13 +78,13 @@ public class AllBetFragment extends Fragment {
                     matches.add(matchEntity);
                 } else {
                     if (!DataSingleton.currentUser.isAdmin()) {
-                        betModel.getUserBet(DataSingleton.currentUser.getUid() + "", matchEntity.getId() + "").observe((LifecycleOwner) getActivity(), betEntity -> {
-                            Log.d("BICHOS-elBeto", betEntity.toString());
+                        betModel.getUserBet(DataSingleton.currentUser.getUid() + "", matchEntity.getId() + "").observe((FragmentActivity) getActivity(), betEntity -> {
+
                             if (matchEntity.getReal_score_teamB() != null && matchEntity.getReal_score_teamA() != null) {
                                 if (betEntity.getScoreA().equals(matchEntity.getReal_score_teamA()) && betEntity.getScoreB().equals(matchEntity.getReal_score_teamB())) {
-                                    Log.d("BICHOS-elBeto", "YAYY");
-                                    Log.d("BICHOS-elMatcho", matchEntity.toString());
+
                                     DataSingleton.currentUser.setPoints("" + (Integer.parseInt(DataSingleton.currentUser.getPoints()) + Integer.parseInt(matchEntity.getMatchPoints())));
+
                                 } else {
                                     if (Integer.valueOf(matchEntity.getReal_score_teamA()) > Integer.valueOf(matchEntity.getReal_score_teamB()) && Integer.valueOf(betEntity.getScoreA()) > Integer.valueOf(betEntity.getScoreB())) {
                                         DataSingleton.currentUser.setPoints("" + (Integer.valueOf(DataSingleton.currentUser.getPoints()) + Integer.valueOf(matchEntity.getMatchPoints())) / 2);
@@ -93,19 +93,20 @@ public class AllBetFragment extends Fragment {
                                     if (Integer.valueOf(matchEntity.getReal_score_teamA()) < Integer.valueOf(matchEntity.getReal_score_teamB()) && Integer.valueOf(betEntity.getScoreA()) < Integer.valueOf(betEntity.getScoreB())) {
                                         DataSingleton.currentUser.setPoints("" + (Integer.valueOf(DataSingleton.currentUser.getPoints()) + Integer.valueOf(matchEntity.getMatchPoints())) / 2);
                                     }
-                                    Log.d("elBeto", "Weno");
+
                                 }
-                                Log.d("BICHOS-elUser", DataSingleton.currentUser.toString());
+
                             }
                         });
                     }
+
                 }
             }
             adapter.setData(matches);
             adapter.notifyDataSetChanged();
             DataSingleton.matches = matches;
         });
-        //userModel.addUser(DataSingleton.currentUser); Hay que decidir donde se sobreescribe el usuario
+
 
         return view;
     }
